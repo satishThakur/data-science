@@ -42,4 +42,26 @@ Which means we would try to fit a linear line to predict the output values. We h
 Code sample for the same can be found at - [link](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/linear-regression.ipynb)
 
 
+## Cost Function
 
+As we have seen in linear regression we try to fit a line which is close to the training set. Cost function measures how well our model works or how well the line fits. As different values of w and b would produce different lines our goal is to find the value of w and b which is the best fit.
+What does it mean to be best fit? Thats where cost function comes in to play. The value of w and b which minimizes the cost function would best fit the model.
+There are multiple cost functions used but one of the common one is called ***Square Error Cost Function*** and is defined as:
+
+$$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
+where 
+  $$f_{w,b}(x^{(i)}) = wx^{(i)} + b \tag{2}$$
+  
+- $f_{w,b}(x^{(i)})$ is our prediction for example $i$ using parameters $w,b$.  
+- $(f_{w,b}(x^{(i)}) -y^{(i)})^2$ is the squared difference between the target value and the prediction.   
+- These differences are summed over all the $m$ examples and divided by `2m` to produce the cost, $J(w,b)$.  
+
+To summarize:
+
+our model is $$f_{w,b}(x) = wx + b $$
+
+our parameters are w and b
+
+Cost function is $$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
+
+Out goal - find value of w and x which minimizes cost function.
