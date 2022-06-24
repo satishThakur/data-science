@@ -26,4 +26,6 @@ As in supervised learning the data is already labeled with y (the output), in co
 Another class of unsupervised leatning is "Anomaly detection". Examples could be "Froud detection".
 Unsupervised learning is also used for "Dimentionality Reduction" - compressing data to fewer data set without compromising the kowledge. 
 
+![Machine Learning](images/ml-intro.png)
+
 
