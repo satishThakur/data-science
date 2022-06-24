@@ -7,7 +7,6 @@ Types of Machine Learning:
 * Supervised Machine Learning
 * Unsupervised Machine Learning
 
-Common terminology in ML:
 
 
 ### Supervised Machine Learning
@@ -29,6 +28,13 @@ Unsupervised learning is also used for "Dimentionality Reduction" - compressing 
 ![Machine Learning](images/ml-intro.png)
 
 ## Example Linear Regression
+
+### Common Terminology in ML
+* ***Training Set***  - Data used to train the model. In case of supervised the data would have both x and y.
+* ***Input Variable or Feature*** The input part of data (x) which is used to predict output. Generally denoted by x.
+* ***Output or Target Variable*** Y - which we are trying to predict
+* ***m*** Number of training examples.
+
 Just to get our intution lets take an example of linear regression (a type of regression):
 A regression model takes the training set as input and train the algorithm which outputs a function f which is of shape:
 $$ f_{w,b}(x) = wx + b \tag{1}$$
