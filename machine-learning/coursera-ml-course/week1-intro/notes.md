@@ -33,7 +33,7 @@ Just to get our intution lets take an example of linear regression (a type of re
 A regression model takes the training set as input and train the algorithm which outputs a function f which is of shape:
 $$ f_{w,b}(x) = wx + b \tag{1}$$
 Which means we would try to fit a linear line to predict the output values. We have taken example where we have price of house given the size of the house. We will use linear regression to train the model and get the function f.
-Code sample for the same can be found at - [link]()
+Code sample for the same can be found at - [link](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/linear-regression.ipynb)
 
 
 
