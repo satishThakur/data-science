@@ -39,7 +39,7 @@ Just to get our intution lets take an example of linear regression (a type of re
 A regression model takes the training set as input and train the algorithm which outputs a function f which is of shape:
 $$ f_{w,b}(x) = wx + b \tag{1}$$
 Which means we would try to fit a linear line to predict the output values. We have taken example where we have price of house given the size of the house. We will use linear regression to train the model and get the function f.
-Code sample for the same can be found at - [link](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/linear-regression.ipynb)
+Code sample for the same can be found at - [link](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/linear-regression.ipynb)
 
 
 ## Cost Function
@@ -96,5 +96,5 @@ Lets understand the "Gradient Decent" parameter update little more.
 ![Cost Function](images/cost_func_linear.png)
 As this is intuative the derivative at any point represent the slope of the tangent. Hence at any point the derivate will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
 
-Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/gradient-decent.ipynb). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
+Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/gradient-decent.ipynb). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
 
