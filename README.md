@@ -14,7 +14,7 @@ As Python is widely used as a programming language in DS landscape we will cover
 * Descriptive Statstics
 
 ## Machine Learning
-* Introduction to Machine Learning. [Notes and related code](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/notes.md)
+* Introduction to Machine Learning. [Notes and related code](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
 
 ## TODO
 * Structure the readme and link to different sections. This can generate documentation etc automatically.
