@@ -6,7 +6,9 @@ This repository contains resources and code from my jouney to learn data science
 
 ## Python
 As Python is widely used as a programming language in DS landscape we will cover important topics to learn and master. Few of the needed skills in python are:
-* NumPy - A library for scientific computation (numeric). Helpful in doing algebraic operations on vectors/metrics etc. Link - [link](https://github.com/satishThakur/data-science/blob/main/python-resources/numpy-cheatsheet.ipynb "NumPy Cheatsheet")
+* ***NumPy*** - A library for scientific computation (numeric). Helpful in doing algebraic operations on vectors/metrics etc. Link - [link](https://github.com/satishThakur/data-science/blob/main/python-resources/numpy-cheatsheet.ipynb "NumPy Cheatsheet")
+* ***Panda*** - 
+* ***MathplotLib*** - Library for plotting and visualization of data.
 
 ## Statastics and Visualization for Basic Data Analysis
 * Descriptive Statstics
