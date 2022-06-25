@@ -96,5 +96,5 @@ Lets understand the "Gradient Decent" parameter update little more.
 ![Cost Function](images/cost_func_linear.png)
 As this is intuative the derivative at any point represent the slope of the tangent. Hence at any point the derivate will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
 
-Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
+Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/coursera-ml-course/week1-intro/gradient-decent.ipynb). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
 
