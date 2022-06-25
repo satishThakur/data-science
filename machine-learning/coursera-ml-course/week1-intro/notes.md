@@ -89,8 +89,6 @@ $$
 $$
 
 Here *simultaniously* means that you calculate the partial derivatives for all the parameters before updating any of the parameters.
-
-Here *simultaniously* means that you calculate the partial derivatives for all the parameters before updating any of the parameters.
 Lets understand the "Gradient Decent" parameter update little more.
 * $$ \alpha $$ - This is called learning rate. Learning rate controls how bigger steps we take for convergence of w and b. If $$ \alpha $$ is too small the algorithm would take more time to converge and if too large it might oscillate and rather diverge. 
 *  $$ \frac{\partial J(w,b)}{\partial w} $$ - The derivative or partial derivate represents the direction. To have a better intution for a fixed b the function J(w) would look like a u-shaped parabola as showin in picture below:
