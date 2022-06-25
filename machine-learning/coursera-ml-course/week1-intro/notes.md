@@ -65,3 +65,33 @@ our parameters are w and b
 Cost function is $$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
 
 Out goal - find value of w and x which minimizes cost function.
+
+## Gradient Decent
+Gradient Decent is an algorithm to find parameters which minimizes the Cost Function. In other words for linear regression - Gradient Decent can be used to train the model (compute w and b) which provides us the hypothesis or the function to predict output variable.
+For "Cost Function" like ***Square Error*** with linear regression - Gradient Decent will always find global minima. If we use a different cost function - Gradient decent might find local minima (which means depending upon where we start we might get different result). 
+The algorithm for Gradient Decent is as below:
+* Start with some arbitary values of w and b.
+* Keep changing values of w and b to minimumze cost function.
+
+In case of linear regression:
+$$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline
+\;  w &= w -  \alpha  \tag{3}  \; \newline 
+ b &= b -  \alpha \frac{\partial J(w,b)}{\partial b}  \newline \rbrace
+\end{align*}$$
+where, parameters $w$, $b$ are updated simultaneously.  
+The gradient is defined as:
+$$
+\begin{align}
+\frac{\partial J(w,b)}{\partial w}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})x^{(i)} \tag{4}\\
+  \frac{\partial J(w,b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)}) \tag{5}\\
+\end{align}
+$$
+
+Here *simultaniously* means that you calculate the partial derivatives for all the parameters before updating any of the parameters.
+Lets understand the "Gradient Decent" parameter update little more.
+* $$ \alpha $$ - This is called learning rate. Learning rate controls how bigger steps we take for convergence of w and b. If $$ \alpha $$ is too small the algorithm would take more time to converge and if too large it might oscillate and rather diverge. 
+*  $$ \frac{\partial J(w,b)}{\partial w} $$ - The derivative or partial derivate represents the direction. To have a better intution for a fixed b the function J(w) would look like a u-shaped parabola as showin in picture below:
+
+![Cost Function](images/cost_func_linear.png)
+As this is intuative the derivative at any point represent the slope of the tangent. Hence at any point the derivate will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
+
