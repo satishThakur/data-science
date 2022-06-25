@@ -74,8 +74,9 @@ The algorithm for Gradient Decent is as below:
 * Keep changing values of w and b to minimumze cost function.
 
 In case of linear regression:
+
 $$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline
-\;  w &= w -  \alpha  \tag{3}  \; \newline 
+\;  w &= w -  \alpha \frac{\partial J(w,b)}{\partial w} \tag{3}  \; \newline 
  b &= b -  \alpha \frac{\partial J(w,b)}{\partial b}  \newline \rbrace
 \end{align*}$$
 where, parameters $w$, $b$ are updated simultaneously.  
@@ -86,6 +87,8 @@ $$
   \frac{\partial J(w,b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)}) \tag{5}\\
 \end{align}
 $$
+
+Here *simultaniously* means that you calculate the partial derivatives for all the parameters before updating any of the parameters.
 
 Here *simultaniously* means that you calculate the partial derivatives for all the parameters before updating any of the parameters.
 Lets understand the "Gradient Decent" parameter update little more.
