@@ -14,6 +14,7 @@ In supervised learning the system leans from the examples. The examples which ma
 In supervised learning when the goal is to predict Y (which can have infinite possible values) is called Regression. 
 Few examples:
 * Predicting price of a house in a location, provided data which has prices of already sold house.
+
 When the goal is to predict Categories which are finite in number the Supervised learning is called "Classification". Note that the categories does not need to be numeric. Few examples:
 
 * Predicting weather cancer is beneign or not based on the data.
