@@ -15,6 +15,6 @@ We will build a linear regression model using these values so you can then predi
 * $\mathbf{x}^{(i)}$, $y^{(i)}$ $i_{th}$ Training Example  `X[i]`, `y[i]` in Python.
 * $\mathbf{w}$   parameter: weight
 * $b$           parameter: bias
-* $f_{\mathbf{w},b}(\mathbf{x}^{(i)})$ -  The result of the model evaluation at $\mathbf{x^{(i)}}$  parameterized by $\mathbf{w},b$ : $f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = \mathbf{w} \cdot \mathbf{x}^{(i)}+b$  
+* $f_{\mathbf{w},b}(\mathbf{x}^{(i)})$ | The result of the model evaluation at $\mathbf{x^{(i)}}$ parameterized by $\mathbf{w},b$: $f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = \mathbf{w} \cdot \mathbf{x}^{(i)}+b$  | `f_wb` | 
 
 ### Vectorization
