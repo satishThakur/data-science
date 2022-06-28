@@ -15,7 +15,7 @@ As Python is widely used as a programming language in DS landscape we will cover
 
 ## Machine Learning
 * [Introduction to Machine Learning](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
-* [Supervised Learning - Multiple Regression]()
+* [Supervised Learning - Multiple Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/notes.md)
 * Supervised Learning  - Classification
 
 ## TODO
