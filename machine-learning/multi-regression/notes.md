@@ -1,5 +1,6 @@
 # Multiple Linear Regression
-In this section we would continue our journey of ***Linear Regression***. In previous section we have gone through Linear Regression with single Feature. We would not explore if we have multiple features and that is what is *Multiple Linear Regression*.
+In this section we would continue our journey of ***Linear Regression***. In previous section we have gone through Linear Regression with single Feature. We would now explore if we have multiple features and that is what is *Multiple Linear Regression*.
+
 ***Note*** Do not confuse with ***Multivariate Regression*** which is different than ***Multiple Linear Regression***. ***Multivariate Regression*** means when we are trying to predict multiple outcome variable. In ***Multiple Linear Regression*** we are still trying to predict single outcome but with multiple input features.
 
 ### Terminologies
@@ -24,4 +25,6 @@ $$ f_{\mathbf{w},b}(\mathbf{x}) =  w_0x_0 + w_1x_1 +... + w_{n-1}x_{n-1} + b $$
 or in vector notation:
 $$ f_{\mathbf{w},b}(\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b $$ 
 where $\cdot$ is a vector `dot product`
+
+### Feature Scaling
 
