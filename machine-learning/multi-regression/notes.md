@@ -88,3 +88,19 @@ Ways to select the right learning rate:
 
 ## Polynomial Regression
 
+### Feature Engineering
+Feature engineering  - Using Intution to design new features by transforming or combining original Features. Few examples:
+* If lengh and width are being used as input features, a new features called area could be derieved.
+* If number of SKU sold and SKU price are featues - total sale which is number of SKU x Price could be new feature.
+
+For cases where Linenar regression does not fit our needs we could also try out Polynomial regression. This could easily achived via Feature Engineering:
+
+* If for the feature $$x_i$$ we see that $$x_i^2$$ has better correlation with the output, we can create a new feature whose data is $$x_i^2$$
+* We can use the same logic to see if we need new feature - $$x_i^3$$
+* As we are multiplying the feature values - ***Feature Scaling*** becomes more important in case of Polynomial Regression.
+* Rest of the procedure remains same as multi regression.
+
+Code with example of ***Polynomila Regression*** is linked [here](). The code conatains example of both feature engineering and scaling, then uses gradient descent to train the polynomial regression Model.
+
+## Using Scikit-learn
+
