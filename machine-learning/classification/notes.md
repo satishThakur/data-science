@@ -32,14 +32,14 @@ So the process for Logistic Regression is as below:
 * We would find the w and b which minimize the cost (this would be explaned later - for now lets assume we have found w and b)
 * We would feed it to logistic function for prediction:
 
-$$ f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = g(\mathbf{w} \cdot \mathbf{x}^{(i)} + b ) \tag{2} $$ 
+$$ f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = g(\mathbf{w} \cdot \mathbf{x}^{(i)} + b ) $$ 
 
   where
 
-  $g(z) = \frac{1}{1+e^{-z}}\tag{3}$
+  $g(z) = \frac{1}{1+e^{-z}}\$
 
 
 #### Interpretation
 The way we can interpret the output prediction is - Probability. Lets assume we are using Logistic regression to find if given a size of tumour is it malignant or not. If we get output as 0.7 we can interpret as  - Model has predicted 70% chance of tumor being malignant. 
 
-Here is link of code to see how Sigmoud function looks [like]().
+Here is link of code to see how Sigmoud function looks [Link](https://github.com/satishThakur/data-science/blob/main/machine-learning/classification/sigmoid_function.ipynb) .
