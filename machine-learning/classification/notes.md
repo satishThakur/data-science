@@ -58,7 +58,7 @@ Here is link of code to see how Sigmoud function looks - [Code Link](https://git
   $$\mathbf{w} \cdot \mathbf{x} = w_0 x_0 + w_1 x_1$$
   
   
-* We interpret the output of the model ($f_{\mathbf{w},b}(x)$) as the probability that $y=1$ given $\mathbf{x}$ and parameterized by $\mathbf{w}$ and $b$.
+* We interpret the output of the model $f_{\mathbf{w},b}(x)$ as the probability that $y=1$ given $\mathbf{x}$ and parameterized by $\mathbf{w}$ and $b$.
 * Therefore, to get a final prediction ($y=0$ or $y=1$) from the logistic regression model, we can use the following heuristic -
 
   if $f_{\mathbf{w},b}(x) >= 0.5$, predict $y=1$
