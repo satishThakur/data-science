@@ -15,8 +15,11 @@ As Python is widely used as a programming language in DS landscape we will cover
 
 ## Machine Learning
 * [Introduction to Machine Learning](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
-* [Supervised Learning - Multiple Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/notes.md)
-* Supervised Learning  - Classification
+* Supervised Learning
+	- [Univariate Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
+	- [Multiple Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/notes.md)
+	- [Classification](https://github.com/satishThakur/data-science/blob/main/machine-learning/classification/notes.md) 
+* Unsupervised Learing
 
 ## TODO
 * Structure the readme and link to different sections. This can generate documentation etc automatically.
