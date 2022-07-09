@@ -46,3 +46,36 @@ Here is link of code to see how Sigmoud function looks - [Code Link](https://git
 
 ### Decision Boundary
 
+* Recall that for logistic regression, the model is represented as 
+
+  $$f_{\mathbf{w},b}(\mathbf{x}^{(i)}) = g(\mathbf{w} \cdot \mathbf{x}^{(i)} + b) $$
+
+  where $g(z)$ is known as the sigmoid function and it maps all input values to values between 0 and 1:
+
+  $g(z) = \frac{1}{1+e^{-z}}\tag{2}$
+  and $\mathbf{w} \cdot \mathbf{x}$ is the vector dot product:
+  
+  $$\mathbf{w} \cdot \mathbf{x} = w_0 x_0 + w_1 x_1$$
+  
+  
+* We interpret the output of the model ($f_{\mathbf{w},b}(x)$) as the probability that $y=1$ given $\mathbf{x}$ and parameterized by $\mathbf{w}$ and $b$.
+* Therefore, to get a final prediction ($y=0$ or $y=1$) from the logistic regression model, we can use the following heuristic -
+
+  if $f_{\mathbf{w},b}(x) >= 0.5$, predict $y=1$
+  
+  if $f_{\mathbf{w},b}(x) < 0.5$, predict $y=0$
+
+* As we know, $g(z) >= 0.5$ for $z >=0$
+
+* For a logistic regression model, $z = \mathbf{w} \cdot \mathbf{x} + b$. Therefore,
+
+  if $\mathbf{w} \cdot \mathbf{x} + b >= 0$, the model predicts $y=1$
+  
+  if $\mathbf{w} \cdot \mathbf{x} + b < 0$, the model predicts $y=0$  
+
+* Hence the line here  $\mathbf{w} \cdot \mathbf{x} + b >= 0$ becomes the `Decision Boundary`. Any values to the left of the line would be false and to the right would be true.
+
+![Decision Boundary](images/decision.png)
+
+Please note that if we use polynomial function instread of linear we can get much complex decision boundaries for example circle, ecplipe etc.
+
