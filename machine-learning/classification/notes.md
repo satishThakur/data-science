@@ -79,3 +79,31 @@ Here is link of code to see how Sigmoud function looks - [Code Link](https://git
 
 Please note that if we use polynomial function instread of linear we can get much complex decision boundaries for example circle, ecplipe etc.
 
+### Loss Function & Cost
+
+Recall that in Linear regression we had used `Square Error` function as a cost function. The function was defined as:
+
+As the function is convex for Linear regression we used gradient descent to train our model to find the appropriate values for w and b.
+
+In case of Logistic Regression the `Square Error` is not a convex function because the model function which is defined as:
+
+is not linear. Hence we get multiple local minima and we will get stuck in one of these.
+
+A different cost function for Logistic Regression is needed and the function is defined as:
+
+Couple of observations:
+* When y=1 and our prediction are near 1 loss is almost zero, but when prediction are around 0 loss value is highest.
+* When y=0 and our prediction are near zero loss is almost zero, but when prediction are around 1 loss value is highest.
+
+A more simplified definition of loss fuction is:
+
+
+With this loss function we can define the Cost as:
+
+
+As this cost function is convex we can use it in gradient descent to find the appropriate values of W and b.
+
+
+### Training the Model - Gradient Descent
+
+
