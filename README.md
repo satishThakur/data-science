@@ -10,8 +10,16 @@ As Python is widely used as a programming language in DS landscape we will cover
 * ***Panda*** - 
 * ***MathplotLib*** - Library for plotting and visualization of data.
 
+## Machine Learning Libraries/Platforms
+
+* [scikit-learn](https://scikit-learn.org/stable/)
+* [Tensor Flow](https://www.tensorflow.org/)
+* [Keras](https://keras.io/)
+
 ## Statastics and Visualization for Basic Data Analysis
 * Descriptive Statstics
+* EDA - Exploratory Data Analysis
+* Data Visualization
 
 ## Machine Learning
 * [Introduction to Machine Learning](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
