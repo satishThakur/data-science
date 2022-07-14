@@ -27,6 +27,7 @@ As Python is widely used as a programming language in DS landscape we will cover
 	- [Univariate Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/notes.md)
 	- [Multiple Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/notes.md)
 	- [Classification](https://github.com/satishThakur/data-science/blob/main/machine-learning/classification/notes.md) 
+	- [Neural Networks](https://github.com/satishThakur/data-science/blob/main/machine-learning/neural-networks/nodes.md)
 * Unsupervised Learing
 
 ## TODO
