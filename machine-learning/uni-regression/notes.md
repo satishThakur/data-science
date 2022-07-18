@@ -63,8 +63,8 @@ Here *simultaniously* means that you calculate the partial derivatives for all t
 
 
 Lets understand the "Gradient Decent" parameter update little more.
-* $$ \alpha $$ - This is called learning rate. Learning rate controls how bigger steps we take for convergence of w and b. If $$ \alpha $$ is too small the algorithm would take more time to converge and if too large it might oscillate and rather diverge. 
-*  $$ \frac{\partial J(w,b)}{\partial w} $$ - The derivative or partial derivate represents the direction. To have a better intution for a fixed b the function J(w) would look like a u-shaped parabola as showin in picture below:
+* $$\alpha $$ - This is called learning rate. Learning rate controls how bigger steps we take for convergence of w and b. If $$ \alpha $$ is too small the algorithm would take more time to converge and if too large it might oscillate and rather diverge. 
+*  $$\frac{\partial J(w,b)}{\partial w} $$ - The derivative or partial derivate represents the direction. To have a better intution for a fixed b the function J(w) would look like a u-shaped parabola as showin in picture below:
 
 ![Cost Function](images/cost_func_linear.png)
 As this is intutive the derivative at any point represent the slope of the tangent. Hence at any point the derivative will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
