@@ -65,6 +65,8 @@ Lets understand the "Gradient Decent" parameter update little more.
 *  $$\frac{\partial J(w,b)}{\partial w} $$ The derivative or partial derivate represents the direction. To have a better intution for a fixed b the function J(w) would look like a u-shaped parabola as showin in picture below:
 
 ![Cost Function](images/cost_func_linear.png)
+
+
 As this is intutive the derivative at any point represent the slope of the tangent. Hence at any point the derivative will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
 
 Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/uni-regression/gradient-decent.ipynb). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
