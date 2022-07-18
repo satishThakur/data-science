@@ -1,35 +1,3 @@
-# Introduction to Machine Learning
-
-### What is Machine learning?
-Ability for computers to learn on their own without explicitly being programmed. 
-
-Traditionally only way to get computers do something has been to wirte down the algorithm which explains step wise what need to be done. Machine Learning Algorithms commonly called `Learners` are different: They figure it out on their own by making inference from data. More the data (quality data) better they get.
-So in assence we do not have to program computers now they program themself
-
-Types of Machine Learning:
-* Supervised Machine Learning
-* Unsupervised Machine Learning
-
-
-### Supervised Machine Learning
-In supervised learning the system leans from the examples. The examples which map input X to Y (label) - using this data where we have already identified the right answer (Y or the label) the algorithm would learn to predict Y from unseen X.
-In supervised learning when the goal is to predict Y (which can have infinite possible values) is called Regression. 
-Few examples:
-* Predicting price of a house in a location, provided data which has prices of already sold house.
-
-When the goal is to predict Categories which are finite in number the Supervised learning is called "Classification". Note that the categories does not need to be numeric. Few examples:
-
-* Predicting weather cancer is beneign or not based on the data.
-* Spam filter - classifying email as a span or not.
-* Content moderation - claddifying content as fit or not fit.
-
-### Unsupervised Machine Learning
-As in supervised learning the data is already labeled with y (the output), in contrast in unsupervised learning data is not labeled. The algorightm tries to find pattern within the data. One typical class of unsupervised learning is "Clustering" for example: Google news which cluster the realted articles together. 
-Another class of unsupervised leatning is "Anomaly detection". Examples could be "Fraud detection".
-Unsupervised learning is also used for "Dimentionality Reduction" - compressing data to fewer data set without compromising the kowledge. 
-
-![Machine Learning](images/ml-intro.png)
-
 ## Linear Regression
 
 ### Common Terminology in ML
@@ -40,7 +8,7 @@ Unsupervised learning is also used for "Dimentionality Reduction" - compressing 
 
 Just to get our intution lets take an example of linear regression (a type of regression):
 A regression model takes the training set as input and train the algorithm which outputs a function f which is of shape:
-$$ f_{w,b}(x) = w*x + b $$
+$$f_{w,b}(x) = w*x + b $$
 Which means we would try to fit a linear line to predict the output values. We have taken example where we have price of house given the size of the house. We will use linear regression to train the model and get the function f.
 Code sample for the same can be found at - [link](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/linear-regression.ipynb)
 
@@ -51,9 +19,9 @@ As we have seen in linear regression we try to fit a line which is close to the 
 What does it mean to be best fit? Thats where cost function comes in to play. The value of w and b which minimizes the cost function would best fit the model.
 There are multiple cost functions used but one of the common one is called ***Square Error Cost Function*** and is defined as:
 
-$$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
+$$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 $$ 
 where 
-  $$f_{w,b}(x^{(i)}) = wx^{(i)} + b \tag{2}$$
+  $$f_{w,b}(x^{(i)}) = wx^{(i)} + b $$
   
 - $f_{w,b}(x^{(i)})$ is our prediction for example $i$ using parameters $w,b$.  
 - $(f_{w,b}(x^{(i)}) -y^{(i)})^2$ is the squared difference between the target value and the prediction.   
@@ -65,7 +33,7 @@ our model is $$f_{w,b}(x) = wx + b $$
 
 our parameters are w and b
 
-Cost function is $$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 \tag{1}$$ 
+Cost function is $$J(w,b) = \frac{1}{2m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})^2 $$ 
 
 Our goal - find value of w and x which minimizes cost function.
 
@@ -79,23 +47,15 @@ The algorithm for Gradient Decent is as below:
 In case of linear regression:
 
 $$\begin{align*} \text{repeat}&\text{ until convergence:} \; \lbrace \newline
-\;  w &= w -  \alpha \frac{\partial J(w,b)}{\partial w} \tag{3}  \; \newline 
+\;  w &= w -  \alpha \frac{\partial J(w,b)}{\partial w}   \; \newline 
  b &= b -  \alpha \frac{\partial J(w,b)}{\partial b}  \newline \rbrace
 \end{align*}$$
 where, parameters $w$, $b$ are updated simultaneously.  
 The gradient is defined as:
 $$
 \begin{align}
-\frac{\partial J(w,b)}{\partial w}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})x^{(i)} \tag{4}\\
-  \frac{\partial J(w,b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)}) \tag{5}\\
-\end{align}
-$$
-
-The gradient is defined as:
-$$
-\begin{align}
-\frac{\partial J(w,b)}{\partial w}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})x^{(i)} \tag{4}\\
-  \frac{\partial J(w,b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)}) \tag{5}\\
+\frac{\partial J(w,b)}{\partial w}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)})x^{(i)} \\
+  \frac{\partial J(w,b)}{\partial b}  &= \frac{1}{m} \sum\limits_{i = 0}^{m-1} (f_{w,b}(x^{(i)}) - y^{(i)}) \\
 \end{align}
 $$
 
@@ -110,4 +70,3 @@ Lets understand the "Gradient Decent" parameter update little more.
 As this is intutive the derivative at any point represent the slope of the tangent. Hence at any point the derivative will move the new w towards the global minima. The logic is same for w and b - where instead of 2-d we get a 3-d graph. But the shape of the surface still remains convex and hence it converges to gobal minima. 
 
 Now to put the theory in pratice we would take the same regression example (Housing Prices) but this time we will use gradient decent to train our model. The code for the same is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/ml-intro/gradient-decent.ipynb). This completes our introduction to ML. In next week we would deep dive into "Linear Regression" more.
-
