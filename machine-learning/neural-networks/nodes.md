@@ -14,7 +14,7 @@ Biological Neoron has inputs called dendrites (through which it gets the input s
 
 The mathematical neuron is extremely simplified model of human neuron. Infact it has shifted a lot from the biological counterpart. The neuron can be represented as:
 
-![neuron](images/enuron.png)
+![neuron](images/neuron.png)
 
 
 ## Why Deep Learning Now?
@@ -27,7 +27,7 @@ The mathematical neuron is extremely simplified model of human neuron. Infact it
 
 Lets take an example of demand prediction. Given input features like - price, material, color etc we need to predict if the shirt would have high demand. The typical neural network for the same might look like:
 
-![Layers](images/neuron-layers.png)
+![Layers](images/neuron-layers.jpeg)
 
 The way to think about is:
 * Input Layers are the input features to the model.
