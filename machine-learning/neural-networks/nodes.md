@@ -39,3 +39,17 @@ Same intution can be applied to image processing where the goal is to find if im
 * Multiple hidden layers which build on last layer.
 * Output Layer which predicts.
 
+
+## Neural Network Layers
+
+* The input feature is also called Layer 0. This contain the vector containing values for different features. For example if we have N features then the vector would have size N.
+* All the layers between input and output are called Hidden Layers. Reason being hidden layers do the feature engineering which are hidden (or unknown) to us. Like in diagram above we have 2 hidden layers - Layer 1 and Layer 2.
+* Every Layer can have N neurons. In diamgram above both layer 1 and layer 2 have each 4 Neurons.
+* Every output (called as activation) from previous layer goes to ever neuron in next layer. For example the feature vector from Layer 0 would go as input to all four neuron of Layer 1. Every neuron in a layer would have its own model parameter weights and bias (w and b). So every neuron would apply the activation function for example sigmoid and produce output. Outputs from all neuron from a layer are combined in a vector called activation. This is now input to next layer.
+* Output Layer in above example has just one neuron (it can have many as well) - here the result would be the prediction. In case activation function is sigmoid the prediction would be from 0 to 1. If we want to convert it to true/false prediction we can (based on threshold). 
+
+## Code Examples
+* [Linear Regression Using Neural Network]()
+* [Logistic Regression using Neural Network]()
+* [Forward Propagation Using tensorFlow]()
+* [Python implementation of forward propagation]()
