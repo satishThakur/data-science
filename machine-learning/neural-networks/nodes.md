@@ -1,6 +1,6 @@
 # Neural Networks
 
-Neural Networks are also called Deep Learning systems. Historically Neural network started with mimicing biological brain (neurons which are basic units). Though the motivation has been human btains but neural networks have differed from biological brains. 
+Neural Networks are also called Deep Learning systems. Historically Neural network started with mimicing biological brain (neurons which are basic units). Though the motivation has been human brains but neural networks have diverged from biological brains (which is not surprising given we know very little about human brain). 
 Few areas where neural network has shown significant promise are:
 * Speech recognision.
 * Computer vision
