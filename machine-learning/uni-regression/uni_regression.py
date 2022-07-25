@@ -100,7 +100,7 @@ def compute_gradient(x, y, w, b):
 def gradient_descent(x_train, y_train,w, b,alpha,num_iter, debug=False):
     """
         Input:
-            x_train: NDArray(m,) - Input or feature values array from the training set.
+            x_train: NDArray(m,n) - Input or feature values array from the training set.
             y_train: NDArray(m,) - output labled values array.
             w: Scalar Value - Model Parameter inital value
             b: Scalar Value - Model parameter - Bias - intial value.
@@ -123,5 +123,3 @@ def gradient_descent(x_train, y_train,w, b,alpha,num_iter, debug=False):
             print(f'Iteration - {i}, cost - {cost_history[-1]}')                  
     
     return (w,b, cost_history)
-
-                    

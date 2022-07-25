@@ -3,6 +3,9 @@ Python modules which contains functions to implement supervised regression for m
 The code would have functions to carry out both Linear and Polynomial regression with N input featues and one output prediction. 
 """
 
+import numpy as np
+import copy, math
+
 #Here x is the feature vector, w is the parameter vector and b is bias.
 def predict(x,w,b):
 	"""
@@ -14,7 +17,7 @@ def predict(x,w,b):
 		Scalar value which is y hat - Prediction from the model. 	
 
 	"""
-    return np.dot(x,w) + b
+	return np.dot(x,w) + b
 
 
 #The cost signifies how accurate the model is - w.r.t. training data.
@@ -29,12 +32,12 @@ def compute_cost(Xs, y, w, b):
 	Output:
 		Scalar value which is y hat - Prediction from the model. 	
 
-	"""
-    m = Xs.shape[0]
-    cost = 0.0
-    for i in range(m):
-        cost = cost + ( predict(Xs[i], w, b) - y[i])**2
-    return cost / (2 * m)
+	"""	
+	m = Xs.shape[0]
+	cost = 0.0
+	for i in range(m):
+		cost = cost + ( predict(Xs[i], w, b) - y[i])**2
+	return cost / (2 * m)
 
 
  
@@ -42,8 +45,8 @@ def compute_cost(Xs, y, w, b):
 # move us one step towards local minima. The way this is done is by finding the partial derivates
 # for each parameter w w.r.t. the cost function.      
 
- def gradient(X_train, y_train, w, b):
- 	"""
+def gradient(X_train, y_train, w, b):
+	"""
 	Input:
 		X_train: ndarray(m,n) - m training data containing n features each.
 		y_train: ndarray(m,)  - m outpot attribute of Label for the training set.
@@ -54,28 +57,27 @@ def compute_cost(Xs, y, w, b):
 		w_delta: Scalar      - delta for b parameter
 		
 	"""
-
-    m,n = X_train.shape # n is number of features.
+	m,n = X_train.shape # n is number of features.
     
-    w_delta = np.zeros((n,))
-    b_delta = 0.0
+	w_delta = np.zeros((n,))
+	b_delta = 0.0
     
-    for i in range(m):
-        err = predict(X_train[i], w, b) - y_train[i]
-        b_delta = b_delta + err 
-        for j in range(n):
-            w_delta[j] = w_delta[j] + err * x_train[i][j]
+	for i in range(m):
+		err = predict(X_train[i], w, b) - y_train[i]
+		b_delta = b_delta + err 
+		for j in range(n):
+			w_delta[j] = w_delta[j] + err * X_train[i][j]
 
             
-    w_delta = w_delta/m
-    b_delta = b_delta/m
-    return w_delta, b_delta
+	w_delta = w_delta/m
+	b_delta = b_delta/m
+	return w_delta, b_delta
     
 
 
 
- def gradient_descent(X_train, y_train, w_in, b_in, a, num_iter):
- 	"""
+def gradient_descent(X_train, y_train, w_in, b_in, a, num_iter):
+	"""
 	Input:
 		X_train: ndarray(m,n) - m training data containing n features each.
 		y_train: ndarray(m,)  - m outpot attribute of Label for the training set.
@@ -87,18 +89,34 @@ def compute_cost(Xs, y, w, b):
 		j_history: Array - History of the cost - has num_iter entries.
 		
 	"""
-    w = copy.deepcopy(w_in)  #avoid modifying global w within function
-    b = b_in
-    j_history = []
+	w = copy.deepcopy(w_in)  #avoid modifying global w within function
+	b = b_in
+	j_history = []
     
-    for i in range(num_iter):
-        w_delta, b_delta = gradient(X_train, y_train, w, b)
-        w = w - a * w_delta
-        b = b - a * b_delta
-        cost = compute_cost(X_train, y_train, w, b)
-        j_history.append(cost)
+	for i in range(num_iter):
+		w_delta, b_delta = gradient(X_train, y_train, w, b)
+		w = w - a * w_delta
+		b = b - a * b_delta
+		cost = compute_cost(X_train, y_train, w, b)
+		j_history.append(cost)
         
-        if i % 10 == 0:
-            print(f"Iteration {i:4d}: Cost {j_history[-1]:8.2f}   ")
+		if i % 10 == 0:
+			print(f"Iteration {i:4d}: Cost {j_history[-1]:8.2f}   ")
     
-    return w, b, j_history             
+	return w, b, j_history     
+
+
+# X - 2-D Array - mxn where 
+#m is number of training set and n is number of features.
+def z_score_normalize(X):
+	"""
+		Input:
+			X: NDArray(m,n) - Input or feature values array from the training set.
+            
+		Output:
+			X: ndarray(m,n) - Normalized features.
+	"""
+
+	mu = np.mean(X, axis=0)
+	std = np.std(X, axis=0)
+	return (X - mu) / std , mu, std
