@@ -64,6 +64,8 @@ where $j$ selects a feature or a column in the $\mathbf{X}$ matrix. $µ_j$ is th
 
 $$\mu_j = \frac{1}{m} \sum_{i=0}^{m-1} x^{(i)}_j $$
 
+$$\sigma^2_j = \frac{1}{m} \sum_{i=0}^{m-1} (x^{(i)}_j - \mu_j)^2 $$
+
 
 As intuive from the formula after Z-Score normalization the distribution mean is centered around 0. As we are deviding the values by standard deviation, most of the values should lie between -3 and 3. 
 
