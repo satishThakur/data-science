@@ -102,4 +102,5 @@ For cases where Linenar regression does not fit our needs we could also try out 
 Code with example of ***Polynomila Regression*** is linked [here](). The code conatains example of both feature engineering and scaling, then uses gradient descent to train the polynomial regression Model.
 
 ## Using Scikit-learn
+Code example for Linear regression using scikit-learn is [here](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/linear_reg_skikit_learn.ipynb)
 
