@@ -59,7 +59,7 @@ To bring the features to similar ranges there are multiple ways:
 * ***Z-Score Normalization***  - 
 
 To implement z-score normalization, adjust your input values as shown in this formula:
-$$x^{(i)}_j = \dfrac{x^{(i)}_j - \mu_j}{\sigma_j}$$ 
+$$x^{(i)}_j = \dfrac{x^{(i)}_j - \mu_j}{\sigma_j} $$ 
 where $j$ selects a feature or a column in the $\mathbf{X}$ matrix. $µ_j$ is the mean of all the values for feature (j) and $\sigma_j$ is the standard deviation of feature (j).
 $$
 \begin{align}
