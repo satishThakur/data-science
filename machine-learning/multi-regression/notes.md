@@ -45,9 +45,9 @@ The code for the same is [here]()
 ### Vectorization
 The model's prediction with multiple variables is given by the linear model:
 
-$$ f_{\mathbf{w},b}(\mathbf{x}) =  w_0x_0 + w_1x_1 +... + w_{n-1}x_{n-1} + b $$
+$$f_{\mathbf{w},b}(\mathbf{x}) =  w_0x_0 + w_1x_1 +... + w_{n-1}x_{n-1} + b $$
 or in vector notation:
-$$ f_{\mathbf{w},b}(\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b $$ 
+$$f_{\mathbf{w},b}(\mathbf{x}) = \mathbf{w} \cdot \mathbf{x} + b $$ 
 where $\cdot$ is a vector `dot product`
 
 When using Python libraries like numpy the vector algebra (for example dot product) would be much faster than doing the same in for loop. These libraries do take advantage of modern GPU/CPU to parallelize the computation. This is what basically is Vectorization. 
