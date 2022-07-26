@@ -62,7 +62,7 @@ To implement z-score normalization, adjust your input values as shown in this fo
 $$x^{(i)}_j = \dfrac{x^{(i)}_j - \mu_j}{\sigma_j} $$ 
 where $j$ selects a feature or a column in the $\mathbf{X}$ matrix. $µ_j$ is the mean of all the values for feature (j) and $\sigma_j$ is the standard deviation of feature (j).
 
-$$\mu_j &= \frac{1}{m} \sum_{i=0}^{m-1} x^{(i)}_j $$
+$$\mu_j = \frac{1}{m} \sum_{i=0}^{m-1} x^{(i)}_j $$
 
 
 As intuive from the formula after Z-Score normalization the distribution mean is centered around 0. As we are deviding the values by standard deviation, most of the values should lie between -3 and 3. 
