@@ -28,7 +28,11 @@ As Python is widely used as a programming language in DS landscape we will cover
 	- [Multiple Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/multi-regression/notes.md)
 	- [Classification - Logistic Regression](https://github.com/satishThakur/data-science/blob/main/machine-learning/classification/notes.md) 
 	- [Neural Networks](https://github.com/satishThakur/data-science/blob/main/machine-learning/neural-networks/nodes.md)
+	- [Decision Trees]()
 * Unsupervised Learing
+	- [Clustering and Anomaly Detection]()
+	- [Recomendation Systems]()
+	- [Reinformcement Learning]
 
 ## TODO
 * Structure the readme and link to different sections. This can generate documentation etc automatically.
