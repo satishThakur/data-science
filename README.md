@@ -30,9 +30,12 @@ As Python is widely used as a programming language in DS landscape we will cover
 	- [Neural Networks](https://github.com/satishThakur/data-science/blob/main/machine-learning/neural-networks/nodes.md)
 	- [Decision Trees]()
 * Unsupervised Learing
-	- [Clustering and Anomaly Detection]()
-	- [Recomendation Systems]()
-	- [Reinformcement Learning]
+	- [Clustering]()
+	- [Anomaly Detection]()
+* Recommender Systems
+	- [Collaborative Filtering]()
+	- [Content-Based Filtering]
+* Reinformcement Learning
 
 ## TODO
 * Structure the readme and link to different sections. This can generate documentation etc automatically.
