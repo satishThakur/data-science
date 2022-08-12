@@ -18,3 +18,9 @@ Again we can use *root mean square* as the cost function with only difference th
 But what if we do not have these features available? 
 
 ### Collaborative Filter
+In case we do not have features for item we can use Collaborative-filter algorithm. Here the approach is very interesting:
+We would simulateniously train our model for parameters w and b (which are per user) and the feature vector x for every item as well. Note that the cost function would be summation of cost function for both w,b and x. 
+Which means the cost function would try to optimize w and b for a user so that it predicts users ratings correctly but at the same time it would try to predict features of a movie so that all users ratings are predicted well for this movie.
+
+We can extend the same approach for prediction of binary classification as well. Just the cost function changes to binary cross entropy. 
+
