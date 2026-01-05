@@ -1,4 +1,3 @@
-
 # Bayesian Data Analysis — Notes
 
 These notes are a faithful digitisation of handwritten notes, structured exactly in the order they were developed.
@@ -35,25 +34,19 @@ Every discrete value of a parameter is a **conjecture**.
 - Relative number of ways a parameter value can produce the data
 - Measures how compatible the data is with a conjecture
 
-\[
-P(D \mid \theta)
-\]
+$$P(D \mid \theta)$$
 
 ### Prior
 - Prior possibilities of all parameter values
 - Encodes plausibility **before seeing data**
 
-\[
-P(\theta)
-\]
+$$P(\theta)$$
 
 ### Posterior
 - Updated probability of parameter values
 - After conditioning on observed data
 
-\[
-P(\theta \mid D)
-\]
+$$P(\theta \mid D)$$
 
 ---
 
@@ -61,27 +54,20 @@ P(\theta \mid D)
 
 Let:
 
-\[
-\theta \in \{\theta_1, \theta_2, \dots, \theta_n\}
-\]
+$$\theta \in \{\theta_1, \theta_2, \dots, \theta_n\}$$
 
 Posterior:
 
-\[
-P(\theta_i \mid y) =
-\frac{P(y \mid \theta_i) P(\theta_i)}{P(y)}
-\]
+$$P(\theta_i \mid y) = \frac{P(y \mid \theta_i) P(\theta_i)}{P(y)}$$
 
 Where:
 
-\[
-P(y) = \sum_i P(y \mid \theta_i) P(\theta_i)
-\]
+$$P(y) = \sum_i P(y \mid \theta_i) P(\theta_i)$$
 
 ### Interpretation of denominator
 - Average likelihood over the prior
 - Also called **expected likelihood**
-- Also called **marginalisation over \(\theta\)**
+- Also called **marginalisation over $\theta$**
 
 ---
 
@@ -107,14 +93,10 @@ Prediction = **averaging likelihood over parameter distribution**.
 
 For continuous parameters:
 
-\[
-P(\theta \mid y) =
-\frac{P(y \mid \theta) P(\theta)}
-{\int P(y \mid \theta) P(\theta) d\theta}
-\]
+$$P(\theta \mid y) = \frac{P(y \mid \theta) P(\theta)}{\int P(y \mid \theta) P(\theta) \, d\theta}$$
 
 - Integral replaces summation
-- Still marginalisation over \(\theta\)
+- Still marginalisation over $\theta$
 
 ### Joint distribution
 The joint distribution contains **complete information**.
@@ -130,19 +112,14 @@ From joint, we obtain:
 ### Prior Predictive
 Before observing data:
 
-\[
-P(y) = \int P(y \mid \theta) P(\theta) d\theta
-\]
+$$P(y) = \int P(y \mid \theta) P(\theta) \, d\theta$$
 
 (average likelihood over prior)
 
 ### Posterior Predictive
 After observing data:
 
-\[
-P(y_{new} \mid y) =
-\int P(y_{new} \mid \theta) P(\theta \mid y) d\theta
-\]
+$$P(y_{new} \mid y) = \int P(y_{new} \mid \theta) P(\theta \mid y) \, d\theta$$
 
 (average likelihood over posterior)
 
@@ -155,18 +132,18 @@ P(y_{new} \mid y) =
 - Two panda species: **A** and **B**
 - Both equally common in the wild
 - Twin birth rates:
-  - \(P(T \mid S_A) = 0.1\)
-  - \(P(T \mid S_B) = 0.2\)
+  - $P(T \mid S_A) = 0.1$
+  - $P(T \mid S_B) = 0.2$
 - Genetic test:
-  - Identifies \(S_A\) with probability 0.8
-  - Identifies \(S_B\) with probability 0.65
+  - Identifies $S_A$ with probability 0.8
+  - Identifies $S_B$ with probability 0.65
 
 We observe:
 1. A panda gives birth to twins
 2. A genetic test result
 
 Questions:
-- What is the probability the panda is \(S_A\) or \(S_B\)?
+- What is the probability the panda is $S_A$ or $S_B$?
 - What is the probability the next birth is a twin?
 - How do these change with new evidence?
 
@@ -174,23 +151,15 @@ Questions:
 
 ## Step 1: Prior
 
-\[
-P(S_A) = 0.5, \quad P(S_B) = 0.5
-\]
+$$P(S_A) = 0.5, \quad P(S_B) = 0.5$$
 
 ---
 
 ## Step 2: Posterior After Twin Birth
 
-\[
-P(S_A \mid T) =
-\frac{0.1 \times 0.5}{0.1 \times 0.5 + 0.2 \times 0.5}
-= 0.33
-\]
+$$P(S_A \mid T) = \frac{0.1 \times 0.5}{0.1 \times 0.5 + 0.2 \times 0.5} = 0.33$$
 
-\[
-P(S_B \mid T) = 0.67
-\]
+$$P(S_B \mid T) = 0.67$$
 
 **Intuition**: Twin birth favours species B.
 
@@ -198,17 +167,11 @@ P(S_B \mid T) = 0.67
 
 ## Step 3: Posterior Predictive After Twin Birth
 
-\[
-P(T_{next}) =
-0.1 \times 0.33 + 0.2 \times 0.67
-= 0.165
-\]
+$$P(T_{next}) = 0.1 \times 0.33 + 0.2 \times 0.67 = 0.165$$
 
 Prior predictive was:
 
-\[
-0.1 \times 0.5 + 0.2 \times 0.5 = 0.15
-\]
+$$0.1 \times 0.5 + 0.2 \times 0.5 = 0.15$$
 
 ---
 
@@ -216,43 +179,27 @@ Prior predictive was:
 
 Test characteristics:
 
-\[
-P(A^+ \mid S_A) = 0.8
-\]
+$$P(A^+ \mid S_A) = 0.8$$
 
-\[
-P(A^+ \mid S_B) = 0.35
-\]
+$$P(A^+ \mid S_B) = 0.35$$
 
 Updated priors (from previous posterior):
 
-\[
-P(S_A) = 0.33, \quad P(S_B) = 0.67
-\]
+$$P(S_A) = 0.33, \quad P(S_B) = 0.67$$
 
 ---
 
 ## Step 5: Posterior After Genetic Test
 
-\[
-P(S_A \mid A^+) =
-\frac{0.8 \times 0.33}{0.8 \times 0.33 + 0.35 \times 0.67}
-= 0.533
-\]
+$$P(S_A \mid A^+) = \frac{0.8 \times 0.33}{0.8 \times 0.33 + 0.35 \times 0.67} = 0.533$$
 
-\[
-P(S_B \mid A^+) = 0.467
-\]
+$$P(S_B \mid A^+) = 0.467$$
 
 ---
 
 ## Step 6: Updated Posterior Predictive
 
-\[
-P(T_{next}) =
-0.533 \times 0.1 + 0.467 \times 0.2
-= 0.1467
-\]
+$$P(T_{next}) = 0.533 \times 0.1 + 0.467 \times 0.2 = 0.1467$$
 
 ---
 
@@ -260,18 +207,16 @@ P(T_{next}) =
 
 ### Parameter evolution
 
-- \(S_A\): 0.5 → 0.33 → 0.533
-- \(S_B\): 0.5 → 0.67 → 0.467
+- $S_A$: 0.5 → 0.33 → 0.533
+- $S_B$: 0.5 → 0.67 → 0.467
 
 ### Prediction evolution
 
-\[
-P(T_{next}) : 0.15 → 0.165 → 0.1467
-\]
+$$P(T_{next}) : 0.15 \rightarrow 0.165 \rightarrow 0.1467$$
 
 ### Core takeaway
 
-> Evidence updates parameter plausibility.  
+> Evidence updates parameter plausibility.
 > Updated parameters update predictions.
 
 ---
