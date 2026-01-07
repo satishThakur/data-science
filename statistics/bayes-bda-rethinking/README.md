@@ -65,7 +65,29 @@ Chapter 4 Part 1:
 - Posterior inference for μ and σ
 - Introduction to quap (quadratic approximation)
 
-### 7. Chapter 4 Exercises
+### 7. Polynomial Regression
+**Then:** [`notebooks/polynomial_regression.ipynb`](./notebooks/polynomial_regression.ipynb)
+
+Chapter 4 Part 2 - Curved lines:
+- When linear models aren't enough
+- Polynomial models (degree 1-6)
+- Critical importance of standardization
+- Model comparison across degrees
+- Overfitting dangers and extrapolation problems
+- Why high-degree polynomials are unstable
+
+### 8. Splines
+**Next:** [`notebooks/splines.ipynb`](./notebooks/splines.ipynb)
+
+Chapter 4 Part 3 - Better curves:
+- Problems with polynomials (global influence, poor extrapolation)
+- B-spline basis functions
+- Knot placement strategies
+- Local influence and stability
+- Splines vs polynomials comparison
+- Why splines are superior for curved relationships
+
+### 9. Chapter 4 Exercises
 **Finally:** [`notebooks/chapter4_exercise.ipynb`](./notebooks/chapter4_exercise.ipynb)
 
 Practice problems covering:
@@ -87,7 +109,9 @@ Practice problems covering:
 │   ├── sequential_updates.ipynb         # Sequential updating
 │   ├── bernoulli.ipynb                  # Bernoulli distribution
 │   ├── sampling_exercise_1.ipynb        # Chapter 3 exercises
-│   ├── univariate_gaussian.ipynb        # Chapter 4 Part 1
+│   ├── univariate_gaussian.ipynb        # Chapter 4 Part 1 - Linear models
+│   ├── polynomial_regression.ipynb      # Chapter 4 Part 2 - Polynomials
+│   ├── splines.ipynb                    # Chapter 4 Part 3 - Splines
 │   ├── chapter4_exercise.ipynb          # Chapter 4 exercises
 │   └── test.ipynb                       # Environment test
 ├── src/
@@ -156,6 +180,9 @@ jupyter notebook chapter2_bayesian_inference_updated.ipynb
 - Linear regression basics
 - Prior specification
 - Quadratic approximation (quap)
+- Polynomial regression and standardization
+- B-splines for curved relationships
+- Model comparison and overfitting
 - Posterior analysis and visualization
 
 ---
