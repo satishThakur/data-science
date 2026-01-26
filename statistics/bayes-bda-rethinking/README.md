@@ -159,9 +159,14 @@ This project uses `uv` for dependency management with Python 3.11+.
 ```bash
 # Install dependencies
 uv sync
+uv run python -m ipykernel install \
+  --user \
+  --name bayes-bda-rethinking \
+  --display-name "Python (bayes-bda-rethinking)"
+
 
 # Start Jupyter Lab
-jupyter lab
+uv run jupyter lab
 ```
 
 ### Running Notebooks
