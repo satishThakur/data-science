@@ -19,7 +19,7 @@ Core concepts covered:
 - Complete worked example: Panda Problem with genetic test
 
 ### 2. Chapter 2: Complete Implementation
-**Next:** [`notebooks/chapter2_bayesian_inference_updated.ipynb`](./notebooks/chapter2_bayesian_inference_updated.ipynb)
+**Next:** [`notebooks/chapter2/chapter2_bayesian_inference_updated.ipynb`](./notebooks/chapter2/chapter2_bayesian_inference_updated.ipynb)
 
 Interactive notebook with:
 - All concepts from bayesian_notes.md with code and visualizations
@@ -30,7 +30,7 @@ Interactive notebook with:
 - Complete visualizations of parameter and prediction evolution
 
 ### 3. Sequential Updating Exploration
-**Then:** [`notebooks/sequential_updates.ipynb`](./notebooks/sequential_updates.ipynb)
+**Then:** [`notebooks/chapter2/sequential_updates.ipynb`](./notebooks/chapter2/sequential_updates.ipynb)
 
 Deep dive into:
 - How beliefs evolve with each observation
@@ -38,7 +38,7 @@ Deep dive into:
 - Real-time belief refinement
 
 ### 4. Bernoulli Distribution
-**Next:** [`notebooks/bernoulli.ipynb`](./notebooks/bernoulli.ipynb)
+**Next:** [`notebooks/chapter3/bernoulli.ipynb`](./notebooks/chapter3/bernoulli.ipynb)
 
 Understanding:
 - Binary outcomes (success/failure)
@@ -47,7 +47,7 @@ Understanding:
 - Analytical solutions
 
 ### 5. Sampling from the Posterior
-**Then:** [`notebooks/sampling_exercise_1.ipynb`](./notebooks/sampling_exercise_1.ipynb)
+**Then:** [`notebooks/chapter3/sampling_exercise_1.ipynb`](./notebooks/chapter3/sampling_exercise_1.ipynb)
 
 Chapter 3 exercises:
 - Grid approximation sampling
@@ -56,7 +56,7 @@ Chapter 3 exercises:
 - Loss functions and point estimates
 
 ### 6. Univariate Gaussian Models
-**Next:** [`notebooks/univariate_gaussian.ipynb`](./notebooks/univariate_gaussian.ipynb)
+**Next:** [`notebooks/chapter4/univariate_gaussian.ipynb`](./notebooks/chapter4/univariate_gaussian.ipynb)
 
 Chapter 4 Part 1:
 - Gaussian/Normal distribution as likelihood
@@ -66,7 +66,7 @@ Chapter 4 Part 1:
 - Introduction to quap (quadratic approximation)
 
 ### 7. Polynomial Regression
-**Then:** [`notebooks/polynomial_regression.ipynb`](./notebooks/polynomial_regression.ipynb)
+**Then:** [`notebooks/chapter4/polynomial_regression.ipynb`](./notebooks/chapter4/polynomial_regression.ipynb)
 
 Chapter 4 Part 2 - Curved lines:
 - When linear models aren't enough
@@ -77,7 +77,7 @@ Chapter 4 Part 2 - Curved lines:
 - Why high-degree polynomials are unstable
 
 ### 8. Splines
-**Next:** [`notebooks/splines.ipynb`](./notebooks/splines.ipynb)
+**Next:** [`notebooks/chapter4/splines.ipynb`](./notebooks/chapter4/splines.ipynb)
 
 Chapter 4 Part 3 - Better curves:
 - Problems with polynomials (global influence, poor extrapolation)
@@ -88,7 +88,7 @@ Chapter 4 Part 3 - Better curves:
 - Why splines are superior for curved relationships
 
 ### 9. Chapter 4 Exercises
-**Finally:** [`notebooks/chapter4_exercise.ipynb`](./notebooks/chapter4_exercise.ipynb)
+**Finally:** [`notebooks/chapter4/chapter4_exercise.ipynb`](./notebooks/chapter4/chapter4_exercise.ipynb)
 
 Practice problems covering:
 - Linear models and prior specification
@@ -99,21 +99,47 @@ Practice problems covering:
 
 ---
 
+## Supplementary Notebooks
+
+### Foundations
+
+Conceptual notebooks for building intuition (can be read anytime):
+
+**Central Limit Theorem:** [`notebooks/foundations/normal.ipynb`](./notebooks/foundations/normal.ipynb)
+- Random walks and emergence of Normal distributions
+- Why sums of random effects → Normal
+- Connection to Gaussian models in Chapter 4
+
+**Log Transformations:** [`notebooks/foundations/log_transformations.ipynb`](./notebooks/foundations/log_transformations.ipynb)
+- Log vs exp functions
+- Normal vs Log-Normal distributions
+- Why we use log-transforms for positive parameters
+- Understanding `log_sigma` in models
+
+---
+
 ## Repository Structure
 
 ```
 .
 ├── bayesian_notes.md                    # Core theory notes
 ├── notebooks/
-│   ├── chapter2_bayesian_inference_updated.ipynb  # Chapter 2 complete
-│   ├── sequential_updates.ipynb         # Sequential updating
-│   ├── bernoulli.ipynb                  # Bernoulli distribution
-│   ├── sampling_exercise_1.ipynb        # Chapter 3 exercises
-│   ├── univariate_gaussian.ipynb        # Chapter 4 Part 1 - Linear models
-│   ├── polynomial_regression.ipynb      # Chapter 4 Part 2 - Polynomials
-│   ├── splines.ipynb                    # Chapter 4 Part 3 - Splines
-│   ├── chapter4_exercise.ipynb          # Chapter 4 exercises
-│   └── test.ipynb                       # Environment test
+│   ├── foundations/                     # Core concepts and utilities
+│   │   ├── normal.ipynb                 # CLT and Normal distribution
+│   │   ├── log_transformations.ipynb    # Log/exp and Log-Normal
+│   │   └── test.ipynb                   # Environment test
+│   ├── chapter2/                        # Small worlds & large worlds
+│   │   ├── chapter2_bayesian_inference_updated.ipynb
+│   │   └── sequential_updates.ipynb
+│   ├── chapter3/                        # Sampling the imaginary
+│   │   ├── bernoulli.ipynb
+│   │   └── sampling_exercise_1.ipynb
+│   ├── chapter4/                        # Geocentric models
+│   │   ├── univariate_gaussian.ipynb
+│   │   ├── polynomial_regression.ipynb
+│   │   ├── splines.ipynb
+│   │   └── chapter4_exercise.ipynb
+│   └── chapter5/                        # Many variables (coming soon)
 ├── src/
 │   └── quap.py                          # Quadratic approximation implementation
 ├── data/                                # Datasets
@@ -144,8 +170,11 @@ jupyter lab
 # Navigate to notebooks directory
 cd notebooks
 
-# Open specific notebook
-jupyter notebook chapter2_bayesian_inference_updated.ipynb
+# Open specific notebook (example)
+jupyter notebook chapter2/chapter2_bayesian_inference_updated.ipynb
+
+# Or start JupyterLab to browse all notebooks
+jupyter lab
 ```
 
 ---
