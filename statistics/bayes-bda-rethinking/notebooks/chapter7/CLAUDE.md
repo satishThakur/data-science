@@ -27,8 +27,13 @@
 - Preventing overfitting
 - When to regularize vs model selection
 
-## Planned Notebooks
+## Notebooks
 
+### Completed ✅
+- [x] `polynomial_overfitting.ipynb` - Section 7.1 example (R² misleading)
+- [x] `reading_notes.md` - Collaborative reading notes and key insights
+
+### Planned
 - [ ] `information_theory_basics.ipynb` - Entropy, KL divergence, deviance
 - [ ] `waic_model_comparison.ipynb` - Computing and using WAIC
 - [ ] `cross_validation.ipynb` - LOO-CV and K-fold

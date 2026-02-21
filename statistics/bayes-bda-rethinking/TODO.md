@@ -10,15 +10,17 @@
 - [ ] Complete 6H3-6H7 homework (optional - can defer)
 - [ ] Brief review of Chapter 6 concepts
 
-### Chapter 7 Preparation (PRIORITY)
-- [ ] **Enhance quap.py with WAIC support**
+### Chapter 7 - In Progress 🔄
+- [x] Create `notebooks/chapter7/` directory
+- [x] Create `notebooks/chapter7/CLAUDE.md`
+- [x] Read Chapter 7 Section 7.1 (overfitting basics)
+- [x] Create `reading_notes.md` for collaborative learning
+- [x] Build `polynomial_overfitting.ipynb` (Section 7.1 example)
+- [ ] **Enhance quap.py with WAIC support** (next priority)
   - [ ] Add `log_likelihood()` method
   - [ ] Add `waic()` method
   - [ ] Add `compare_models()` function
   - [ ] Write tests for WAIC implementation
-- [ ] Create `notebooks/chapter7/` directory
-- [ ] Create `notebooks/chapter7/CLAUDE.md`
-- [ ] Read Chapter 7 overview
 
 ## Chapter 6 Status
 
