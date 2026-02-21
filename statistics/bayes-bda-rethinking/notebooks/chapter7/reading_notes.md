@@ -153,8 +153,87 @@ Based on this foundation, Chapter 7 will cover:
 - How much regularization is enough?
 - When does WAIC work well vs poorly?
 - How does cross-validation compare to information criteria?
-- Can we visualize the bias-variance tradeoff?
+- ✅ Can we visualize the bias-variance tradeoff? **YES - see polynomial notebook!**
+
+---
+
+## Practical Lessons from Polynomial Example
+
+### 1. Scaling Matters for Priors
+
+**Key insight**: Scale outcomes thoughtfully, not automatically!
+
+- **Predictors**: Z-score standardization (standard practice)
+- **Outcomes**: Scale to make priors interpretable
+
+For brain volume:
+- **Book approach**: Scale to [0, 1] by dividing by max
+  - Zero = no brain (meaningful!)
+  - One = largest brain (meaningful!)
+  - Priors: α ~ Normal(0.5, 1) makes immediate sense
+
+- **Not**: Z-score standardization
+  - Less interpretable for bounded outcomes
+  - Harder to set meaningful priors
+
+**Principle**: Choose scaling that helps you set informative priors!
+
+### 2. Overparameterization is Real
+
+With **N data points** and **N+ parameters**, bad things happen:
+
+**Example**: Degree 6 polynomial with 7 observations
+- Parameters: α + β₁...β₆ + σ = **8 parameters**
+- Data: **7 observations**
+- Problem: Hessian is singular, can't compute covariance
+
+**Solution** (from book): Fix σ = 0.001 instead of estimating it
+- Reduces to 7 parameters for 7 data points
+- Just barely identifiable
+- Still a terrible model, but at least it fits!
+
+**Lesson**: Models can be too complex to even fit properly!
+
+### 3. Visualizing Bias-Variance Tradeoff
+
+**Three complementary visualizations**:
+
+1. **R² progression**: Always increases (misleading!)
+
+2. **Credible intervals**:
+   - Underfit (degree 1): Narrow but wrong
+   - Good fit (degree 2-3): Reasonable width
+   - Overfit (degree 5-6): HUGE uncertainty!
+   - **Insight**: Overfit models are very uncertain about their bad predictions
+
+3. **Sensitivity to observations**:
+   - **Underfit**: Drop any point → barely changes (stable but rigid)
+   - **Overfit**: Drop any point → drastically changes (memorizing, not learning)
+   - **Good model**: Intermediate stability
+
+### 4. The Fragility of Overfitting
+
+**Key demonstration**: Leave-one-out sensitivity
+
+- **Degree 1 (underfit)**:
+  - All leave-one-out fits nearly identical
+  - High bias, low variance
+  - Too stable (rigid)
+
+- **Degree 6 (overfit)**:
+  - Each leave-one-out fit wildly different
+  - Low bias, high variance
+  - Too fragile (memorizing)
+
+- **Degree 2-3 (just right)**:
+  - Moderate sensitivity
+  - Balanced bias-variance
+  - Generalizable
+
+**Quote from visualization**:
+> "Overfit models are not just wrong—they're unstable!"
 
 ---
 
 *These notes will be updated as we progress through Chapter 7*
+*Last updated: After completing polynomial overfitting notebook*
