@@ -35,7 +35,7 @@
 
 ### Planned
 - [ ] `information_theory_basics.ipynb` - Entropy, KL divergence, deviance
-- [ ] `waic_model_comparison.ipynb` - Computing and using WAIC
+- [x] `waic_model_comparison.ipynb` - Computing WAIC from scratch; compares 6 polynomial models
 - [ ] `cross_validation.ipynb` - LOO-CV and K-fold
 - [ ] `regularization.ipynb` - Regularizing priors
 - [ ] `chapter7_homework.ipynb` - Practice problems

@@ -47,14 +47,14 @@
 
 ### Session 1: Information Theory & WAIC
 - [ ] Notebook: `information_theory_basics.ipynb`
-- [ ] Notebook: `waic_model_comparison.ipynb`
+- [x] Notebook: `waic_model_comparison.ipynb` — WAIC + brute-force LOO from scratch
 - [ ] Understand entropy, KL divergence, deviance
-- [ ] Master WAIC calculation and interpretation
+- [x] Master WAIC calculation and interpretation
+- [x] Implement LOO-CV (brute-force exact, N=7)
 
 ### Session 2: Cross-Validation & Regularization
 - [ ] Notebook: `cross_validation.ipynb`
 - [ ] Notebook: `regularization.ipynb`
-- [ ] Implement LOO-CV (or integrate ArviZ)
 - [ ] Understand regularizing priors
 
 ### Session 3: Practice & Review (Optional)
