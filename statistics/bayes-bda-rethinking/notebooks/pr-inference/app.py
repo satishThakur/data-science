@@ -235,31 +235,48 @@ with tab2:
 
     # ── Percentile analysis ───────────────────────────────────────────────────
     st.subheader(f"Percentile within {desig} (m2)")
+    st.markdown(
+        "**P(beats random peer)** = probability this developer outperforms a randomly chosen "
+        f"{desig} colleague (accounts for individual noise). "
+        "This is the primary ranking metric."
+    )
 
     rng             = np.random.default_rng(42)
     S               = len(mu_org_s)
     lam_dev_post    = np.exp(alpha_m2[:, dev_id])
-    lam_desig_pop   = np.exp(mu_org_s + delta_s[:, desig_idx])
     z_peer          = rng.normal(0, 1, S)
     lam_peer        = np.exp(mu_org_s + delta_s[:, desig_idx] + z_peer * sigma_dev_s)
 
-    pct_samples     = (lam_desig_pop[:, None] < lam_dev_post[None, :]).mean(axis=0) * 100
-    pct_med         = np.median(pct_samples)
-    pct_lo          = np.percentile(pct_samples, 2.5)
-    pct_hi          = np.percentile(pct_samples, 97.5)
+    # Primary metric: P(dev > random peer) — honest peer comparison
     prob_beats_peer = (lam_dev_post > lam_peer).mean() * 100
+
+    # Secondary: dev posterior median vs designation mean
+    lam_desig_pop   = np.exp(mu_org_s + delta_s[:, desig_idx])
+    prob_above_mean = (lam_dev_post > lam_desig_pop).mean() * 100
+
+    # Outlier status based on prob_beats_peer
+    if prob_beats_peer < 10:
+        outlier_status = "Bottom 10%"
+    elif prob_beats_peer < 25:
+        outlier_status = "Bottom 25%"
+    elif prob_beats_peer > 90:
+        outlier_status = "Top 10%"
+    elif prob_beats_peer > 75:
+        outlier_status = "Top 25%"
+    else:
+        outlier_status = "Within normal range"
 
     col1, col2, col3 = st.columns(3)
     col1.metric(
-        f"Percentile within {desig}",
-        f"{pct_med:.1f}th",
-        f"95% CI: [{pct_lo:.1f}, {pct_hi:.1f}]"
+        f"P(beats random {desig} peer)",
+        f"{prob_beats_peer:.1f}%",
+        f"≈ {prob_beats_peer:.0f}th percentile"
     )
-    col2.metric("P(beats random peer)", f"{prob_beats_peer:.1f}%")
-    col3.metric(
-        "Outlier status",
-        "Bottom 10%" if pct_hi < 10 else ("Top 10%" if pct_lo > 90 else "Within normal range")
+    col2.metric(
+        f"P(above {desig} mean)",
+        f"{prob_above_mean:.1f}%"
     )
+    col3.metric("Outlier status", outlier_status)
 
     # ── Monthly trend ─────────────────────────────────────────────────────────
     st.subheader("Monthly PR trend")
