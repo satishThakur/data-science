@@ -30,7 +30,10 @@ st.markdown("""
     .metric-label { font-size: 0.8rem !important; }
     h1 { text-align: center; }
     h3 { color: #555; font-weight: 500; }
-    .stMetric { background: #f8f9fa; border-radius: 8px; padding: 0.5rem 1rem; }
+    [data-testid="stMetric"] { background: #f8f9fa; border-radius: 8px; padding: 0.5rem 1rem; }
+    [data-testid="stMetricLabel"] { color: #555 !important; }
+    [data-testid="stMetricValue"] { color: #111 !important; }
+    [data-testid="stMetricDelta"] { color: #444 !important; }
 </style>
 """, unsafe_allow_html=True)
 
