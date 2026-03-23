@@ -10,16 +10,37 @@ Run from project root:
 import numpy as np
 import pandas as pd
 import arviz as az
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import plotly.express as px
 import streamlit as st
 from pathlib import Path
+
+# ── Page config ───────────────────────────────────────────────────────────────
+st.set_page_config(
+    page_title="PR Inference",
+    page_icon="📊",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+# ── Minimal custom style ──────────────────────────────────────────────────────
+st.markdown("""
+<style>
+    .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+    .metric-label { font-size: 0.8rem !important; }
+    h1 { text-align: center; }
+    h3 { color: #555; font-weight: 500; }
+    .stMetric { background: #f8f9fa; border-radius: 8px; padding: 0.5rem 1rem; }
+</style>
+""", unsafe_allow_html=True)
 
 # ── Paths ─────────────────────────────────────────────────────────────────────
 DATA_DIR     = Path(__file__).parent.parent.parent / 'data'
 DESIGNATIONS = ['aSDE', 'SDE-1', 'SDE-2', 'SDE-3', 'SDE-4']
+DESIG_COLORS = px.colors.qualitative.Plotly[:5]
 GRAND_MEAN   = np.log(8)
 
-# ── Load data (cached — only runs once) ───────────────────────────────────────
+# ── Load data (cached) ────────────────────────────────────────────────────────
 @st.cache_resource
 def load_all():
     df           = pd.read_csv(DATA_DIR / 'pr_simulated.csv')
@@ -29,36 +50,31 @@ def load_all():
 
 df, idata_m2, idata_simple = load_all()
 
-# ── Precompute posteriors (cached) ────────────────────────────────────────────
 @st.cache_resource
 def precompute(_df, _idata_m2, _idata_simple):
     dev_df  = _df.drop_duplicates('developer_id').sort_values('developer_id').reset_index(drop=True)
     N_DEVS  = len(dev_df)
     N_TEAMS = _df['team_id'].nunique()
 
-    # Empirical: total PRs / total exposure per developer
     emp = (_df.groupby('developer_id')['pr_count'].sum()
            / _df.groupby('developer_id')['exposure'].sum()).values
 
-    # m_simple posterior — alpha shape: (S, N_DEVS)
     alpha_s      = _idata_simple.posterior['alpha'].values.reshape(-1, N_DEVS)
     lam_s_med    = np.median(np.exp(alpha_s), axis=0)
     lam_s_lo     = np.percentile(np.exp(alpha_s), 5,  axis=0)
     lam_s_hi     = np.percentile(np.exp(alpha_s), 95, axis=0)
 
-    # m2 posterior — developer level
     alpha_m2     = _idata_m2.posterior['alpha'].values.reshape(-1, N_DEVS)
     lam_m2_med   = np.median(np.exp(alpha_m2), axis=0)
     lam_m2_lo    = np.percentile(np.exp(alpha_m2), 5,  axis=0)
     lam_m2_hi    = np.percentile(np.exp(alpha_m2), 95, axis=0)
 
-    # m2 posterior — designation and team level
     mu_org_s     = _idata_m2.posterior['mu_org'].values.flatten()
     delta_s      = _idata_m2.posterior['delta'].values.reshape(-1, len(DESIGNATIONS))
     gamma_s      = _idata_m2.posterior['gamma'].values.reshape(-1, N_TEAMS)
     sigma_dev_s  = _idata_m2.posterior['sigma_dev'].values.flatten()
-    lam_desig    = np.exp(mu_org_s[:, None] + delta_s)   # (S, 5)
-    lam_team     = np.exp(mu_org_s[:, None] + gamma_s)   # (S, 15)
+    lam_desig    = np.exp(mu_org_s[:, None] + delta_s)
+    lam_team     = np.exp(mu_org_s[:, None] + gamma_s)
 
     return (dev_df, N_DEVS, N_TEAMS, emp,
             alpha_s, lam_s_med, lam_s_lo, lam_s_hi,
@@ -72,234 +88,317 @@ def precompute(_df, _idata_m2, _idata_simple):
  mu_org_s, delta_s, gamma_s, sigma_dev_s,
  lam_desig, lam_team) = precompute(df, idata_m2, idata_simple)
 
-# ── Page layout ───────────────────────────────────────────────────────────────
-st.set_page_config(page_title="PR Inference", layout="wide")
-st.title("PR Inference Dashboard")
-st.markdown(
-    "Bayesian analysis of developer PR rates. "
-    "**Empirical** = raw MLE | **m_simple** = per-developer Bayesian | "
-    "**m2** = full hierarchy (org + designation + team + developer)"
+# ── Sidebar navigation ────────────────────────────────────────────────────────
+st.sidebar.title("Navigation")
+page = st.sidebar.radio(
+    "Go to",
+    ["Org Overview", "Developer Lookup"],
+    label_visibility="collapsed"
 )
 
-tab1, tab2 = st.tabs(["Org Overview", "Developer Lookup"])
+st.sidebar.markdown("---")
+st.sidebar.markdown("**Models**")
+st.sidebar.markdown("- 🔵 **Empirical** — raw MLE")
+st.sidebar.markdown("- 🟠 **m_simple** — per-developer Bayes")
+st.sidebar.markdown("- 🟢 **m2** — full hierarchy")
+st.sidebar.markdown("---")
+st.sidebar.caption(f"{N_DEVS} developers · {N_TEAMS} teams · 6 months")
 
-# ── Tab 1: Org Overview ───────────────────────────────────────────────────────
-with tab1:
+# ── Header ────────────────────────────────────────────────────────────────────
+st.markdown("<h1>📊 PR Inference Dashboard</h1>", unsafe_allow_html=True)
+st.markdown(
+    "<p style='text-align:center; color:#888; margin-bottom:2rem;'>"
+    "Bayesian analysis of developer PR rates across teams and designations"
+    "</p>",
+    unsafe_allow_html=True
+)
+
+# ═════════════════════════════════════════════════════════════════════════════
+# PAGE 1 — ORG OVERVIEW
+# ═════════════════════════════════════════════════════════════════════════════
+if page == "Org Overview":
+
+    # ── Top KPIs ──────────────────────────────────────────────────────────────
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Developers", N_DEVS)
+    col2.metric("Teams", N_TEAMS)
+    col3.metric("Org mean (m2)", f"{np.exp(mu_org_s.mean()):.1f} PRs/mo")
+    col4.metric("Avg individual noise", f"±{np.exp(sigma_dev_s.mean()):.2f}x")
+
+    st.markdown("---")
 
     # ── Designation rates ─────────────────────────────────────────────────────
     st.subheader("Designation Rates")
-    st.markdown(
-        "**m2** (coloured): posterior median + 90% CI. "
-        "**Empirical** (grey diamonds): raw mean per designation."
-    )
 
-    fig, ax = plt.subplots(figsize=(10, 4))
+    col_left, col_right = st.columns([3, 2])
 
-    for i, desig in enumerate(DESIGNATIONS):
-        mask       = dev_df['designation'] == desig
-        emp_desig  = emp[mask]
+    with col_left:
+        fig = go.Figure()
 
-        # Empirical scatter + mean
-        ax.scatter([i - 0.2] * len(emp_desig), emp_desig,
-                   alpha=0.25, color='grey', s=15, zorder=2)
-        ax.scatter(i - 0.2, emp_desig.mean(),
-                   color='grey', s=100, marker='D', zorder=4, label='Empirical' if i == 0 else '')
+        for i, desig in enumerate(DESIGNATIONS):
+            med    = np.median(lam_desig[:, i])
+            lo, hi = np.percentile(lam_desig[:, i], [5, 95])
 
-        # m2 posterior
-        med     = np.median(lam_desig[:, i])
-        lo, hi  = np.percentile(lam_desig[:, i], [5, 95])
-        ax.errorbar(i + 0.2, med, yerr=[[med - lo], [hi - med]],
-                    fmt='o', color=f'C{i}', capsize=5, markersize=9,
-                    label=f'{desig} m2' if i == 0 else desig, zorder=5)
+            # m2 posterior CI
+            fig.add_trace(go.Scatter(
+                x=[lo, hi], y=[desig, desig],
+                mode='lines',
+                line=dict(color=DESIG_COLORS[i], width=6),
+                opacity=0.4,
+                showlegend=False,
+                hovertemplate=f"{desig} 90% CI: [{lo:.1f}, {hi:.1f}]<extra></extra>"
+            ))
+            # m2 median dot
+            fig.add_trace(go.Scatter(
+                x=[med], y=[desig],
+                mode='markers',
+                marker=dict(color=DESIG_COLORS[i], size=12, symbol='circle'),
+                name=f"{desig} (m2)",
+                hovertemplate=f"{desig} m2 median: {med:.1f} PRs/mo<extra></extra>"
+            ))
+            # Empirical mean diamond
+            emp_mean = emp[dev_df['designation'] == desig].mean()
+            fig.add_trace(go.Scatter(
+                x=[emp_mean], y=[desig],
+                mode='markers',
+                marker=dict(color=DESIG_COLORS[i], size=10, symbol='diamond',
+                            line=dict(color='white', width=1)),
+                showlegend=False,
+                hovertemplate=f"{desig} empirical mean: {emp_mean:.1f} PRs/mo<extra></extra>"
+            ))
 
-    ax.axhline(np.exp(GRAND_MEAN), color='black', lw=1.2,
-               linestyle='--', label='Grand mean (8/mo)')
-    ax.set_xticks(range(len(DESIGNATIONS)))
-    ax.set_xticklabels(DESIGNATIONS, fontsize=11)
-    ax.set_ylabel("Expected PRs / month")
-    ax.set_title("Designation rates: Empirical (grey) vs m2 posterior 90% CI")
-    ax.legend(fontsize=8)
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
+        fig.add_vline(x=np.exp(GRAND_MEAN), line_dash="dash",
+                      line_color="grey", opacity=0.6,
+                      annotation_text="Grand mean", annotation_position="top right")
+
+        fig.update_layout(
+            height=280,
+            margin=dict(l=20, r=20, t=20, b=20),
+            xaxis_title="PRs / month",
+            yaxis_title="",
+            showlegend=False,
+            plot_bgcolor='white',
+            xaxis=dict(gridcolor='#eee'),
+            yaxis=dict(gridcolor='#eee'),
+        )
+        st.plotly_chart(fig, use_container_width=True)
+
+    with col_right:
+        st.markdown("**Designation summary**")
+        rows = []
+        for i, desig in enumerate(DESIGNATIONS):
+            med    = np.median(lam_desig[:, i])
+            lo, hi = np.percentile(lam_desig[:, i], [5, 95])
+            n_devs = (dev_df['designation'] == desig).sum()
+            rows.append({
+                "Designation": desig,
+                "m2 median": f"{med:.1f}",
+                "90% CI": f"[{lo:.1f}, {hi:.1f}]",
+                "N devs": n_devs,
+            })
+        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+
+    st.markdown("---")
 
     # ── Team rates ────────────────────────────────────────────────────────────
-    st.subheader("Team Rates (m2 posterior)")
-    st.markdown("Colour = tier: **blue** Balanced | **orange** Junior-heavy | **green** Mostly-junior")
+    st.subheader("Team Rates")
 
-    TIER_COLOR = {'balanced': 'C0', 'junior_heavy': 'C1', 'mostly_junior': 'C2'}
+    TIER_COLOR = {'balanced': '#636EFA', 'junior_heavy': '#EF553B', 'mostly_junior': '#00CC96'}
     team_names = [f'Team-{i+1}' for i in range(N_TEAMS)]
 
-    fig, ax = plt.subplots(figsize=(13, 4))
+    fig = go.Figure()
 
     for i, tname in enumerate(team_names):
         tier_val = dev_df[dev_df['team'] == tname]['tier'].iloc[0]
         color    = TIER_COLOR[tier_val]
         med      = np.median(lam_team[:, i])
         lo, hi   = np.percentile(lam_team[:, i], [5, 95])
-        ax.errorbar(i, med, yerr=[[med - lo], [hi - med]],
-                    fmt='o', color=color, capsize=4, markersize=8, zorder=3)
-        # Empirical team mean
-        emp_team = emp[dev_df['team'] == tname]
-        ax.scatter(i, emp_team.mean(), marker='D', color='grey',
-                   s=60, alpha=0.6, zorder=2)
+        emp_mean = emp[dev_df['team'] == tname].mean()
 
-    ax.axhline(np.exp(GRAND_MEAN), color='black', lw=1.2, linestyle='--', label='Grand mean')
-    ax.axvline(4.5,  color='black', lw=1, linestyle=':')
-    ax.axvline(9.5,  color='black', lw=1, linestyle=':')
-    ax.set_xticks(range(N_TEAMS))
-    ax.set_xticklabels(team_names, rotation=45, fontsize=9)
-    ax.set_ylabel("Expected PRs / month")
-    ax.set_title("Team rates: m2 posterior 90% CI (grey diamond = empirical team mean)")
-    ax.legend(fontsize=9)
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
+        fig.add_trace(go.Scatter(
+            x=[tname, tname], y=[lo, hi],
+            mode='lines',
+            line=dict(color=color, width=3),
+            opacity=0.4,
+            showlegend=False,
+            hoverinfo='skip',
+        ))
+        fig.add_trace(go.Scatter(
+            x=[tname], y=[med],
+            mode='markers',
+            marker=dict(color=color, size=10),
+            name=tier_val.replace('_', ' ').title() if i in [0, 5, 10] else '',
+            showlegend=i in [0, 5, 10],
+            hovertemplate=f"{tname} m2 median: {med:.1f}<br>Empirical: {emp_mean:.1f}<extra></extra>"
+        ))
 
-    # ── Sigma comparison ──────────────────────────────────────────────────────
-    st.subheader("Model Comparison: sigma_dev")
-    st.markdown(
-        "m_simple absorbs all developer variation into one `sigma_dev`. "
-        "m2 partitions it into designation + team + individual. "
-        "If m_simple sigma >> m2 sigma, team/designation effects are real."
+    fig.add_hline(y=np.exp(GRAND_MEAN), line_dash="dash",
+                  line_color="grey", opacity=0.6)
+    fig.add_vline(x=4.5, line_dash="dot", line_color="black", opacity=0.3)
+    fig.add_vline(x=9.5, line_dash="dot", line_color="black", opacity=0.3)
+
+    fig.update_layout(
+        height=300,
+        margin=dict(l=20, r=20, t=20, b=20),
+        yaxis_title="PRs / month",
+        xaxis_title="",
+        plot_bgcolor='white',
+        xaxis=dict(gridcolor='#eee'),
+        yaxis=dict(gridcolor='#eee'),
+        legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1)
     )
+    st.plotly_chart(fig, use_container_width=True)
 
-    sigma_s_simple = idata_simple.posterior['sigma_dev'].values.flatten()
-    sigma_s_m2     = idata_m2.posterior['sigma_dev'].values.flatten()
+    st.caption("Vertical dotted lines separate tiers. Blue = Balanced | Red = Junior-heavy | Green = Mostly-junior")
 
-    fig, ax = plt.subplots(figsize=(7, 3))
-    ax.hist(sigma_s_simple, bins=50, alpha=0.6, color='steelblue',
-            density=True, label=f'm_simple sigma_dev (mean={sigma_s_simple.mean():.2f})')
-    ax.hist(sigma_s_m2,     bins=50, alpha=0.6, color='darkorange',
-            density=True, label=f'm2 sigma_dev (mean={sigma_s_m2.mean():.2f})')
-    ax.set_xlabel("sigma_dev")
-    ax.set_title("sigma_dev: m_simple vs m2")
-    ax.legend()
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
+# ═════════════════════════════════════════════════════════════════════════════
+# PAGE 2 — DEVELOPER LOOKUP
+# ═════════════════════════════════════════════════════════════════════════════
+elif page == "Developer Lookup":
 
-# ── Tab 2: Developer Lookup ───────────────────────────────────────────────────
-with tab2:
-    st.subheader("Developer Lookup")
-
-    dev_id = int(st.number_input(
-        "Developer ID", min_value=0, max_value=N_DEVS - 1, value=155, step=1
-    ))
+    col_input, _ = st.columns([1, 3])
+    with col_input:
+        dev_id = int(st.number_input(
+            "Developer ID", min_value=0, max_value=N_DEVS - 1, value=155, step=1
+        ))
 
     dev_info  = dev_df.iloc[dev_id]
     desig     = dev_info['designation']
     team      = dev_info['team']
-    tier      = dev_info['tier']
+    tier      = dev_info['tier'].replace('_', ' ').title()
     true_lam  = dev_info['true_lam']
     desig_idx = DESIGNATIONS.index(desig)
 
-    # ── Developer info ────────────────────────────────────────────────────────
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("Designation", desig)
-    col2.metric("Team", team)
-    col3.metric("Tier", tier.replace('_', ' ').title())
-    col4.metric("True λ (ground truth)", f"{true_lam:.2f} PRs/mo")
+    # ── Developer info strip ──────────────────────────────────────────────────
+    col1, col2, col3, col4, col5 = st.columns(5)
+    col1.metric("Developer", f"#{dev_id}")
+    col2.metric("Designation", desig)
+    col3.metric("Team", team)
+    col4.metric("Tier", tier)
+    col5.metric("True λ", f"{true_lam:.1f} PRs/mo")
+
+    st.markdown("---")
 
     # ── Rate comparison ───────────────────────────────────────────────────────
-    st.subheader("Rate Estimates — Three Models Side by Side")
-    st.markdown(
-        "Anomaly check: if **m2** is very different from **Empirical**, "
-        "the team/designation context is pulling hard — worth investigating."
-    )
+    col_left, col_right = st.columns([3, 2])
 
-    fig, ax = plt.subplots(figsize=(9, 3))
+    with col_left:
+        st.subheader("Rate Estimates")
 
-    models = ['Empirical',         'm_simple',         'm2 (hierarchical)']
-    meds   = [emp[dev_id],         lam_s_med[dev_id],  lam_m2_med[dev_id]]
-    los    = [emp[dev_id],         lam_s_lo[dev_id],   lam_m2_lo[dev_id]]
-    his    = [emp[dev_id],         lam_s_hi[dev_id],   lam_m2_hi[dev_id]]
-    colors = ['grey',              'steelblue',         'darkorange']
+        fig = go.Figure()
 
-    for i, (name, med, lo, hi, color) in enumerate(zip(models, meds, los, his, colors)):
-        ax.barh(i, med, color=color, alpha=0.6, height=0.5)
-        if name != 'Empirical':
-            ax.plot([lo, hi], [i, i], color=color, lw=4, alpha=0.5)
-        ax.text(max(his) * 1.02, i, f'{med:.1f}', va='center', fontsize=11)
+        models = ['m2 (hierarchical)', 'm_simple', 'Empirical']
+        meds   = [lam_m2_med[dev_id], lam_s_med[dev_id],  emp[dev_id]]
+        los    = [lam_m2_lo[dev_id],  lam_s_lo[dev_id],   emp[dev_id]]
+        his    = [lam_m2_hi[dev_id],  lam_s_hi[dev_id],   emp[dev_id]]
+        colors = ['#00CC96',           '#636EFA',            '#aaa']
 
-    ax.axvline(true_lam, color='red', lw=2, linestyle='--',
-               label=f'True λ = {true_lam:.1f}')
-    ax.set_yticks(range(3))
-    ax.set_yticklabels(models, fontsize=11)
-    ax.set_xlabel("Estimated λ (PRs / month)")
-    ax.set_title(f"Dev {dev_id} ({desig}, {team}) — rate comparison")
-    ax.legend(fontsize=9)
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
+        for i, (name, med, lo, hi, color) in enumerate(zip(models, meds, los, his, colors)):
+            # CI bar
+            if name != 'Empirical':
+                fig.add_trace(go.Scatter(
+                    x=[lo, hi], y=[name, name],
+                    mode='lines',
+                    line=dict(color=color, width=8),
+                    opacity=0.3,
+                    showlegend=False,
+                    hovertemplate=f"90% CI: [{lo:.1f}, {hi:.1f}]<extra></extra>"
+                ))
+            # Point estimate
+            fig.add_trace(go.Scatter(
+                x=[med], y=[name],
+                mode='markers+text',
+                marker=dict(color=color, size=14),
+                text=[f"  {med:.1f}"],
+                textposition='middle right',
+                textfont=dict(size=13),
+                name=name,
+                hovertemplate=f"{name}: {med:.1f} PRs/mo<extra></extra>"
+            ))
 
-    # ── Percentile analysis ───────────────────────────────────────────────────
-    st.subheader(f"Percentile within {desig} (m2)")
-    st.markdown(
-        "**P(beats random peer)** = probability this developer outperforms a randomly chosen "
-        f"{desig} colleague (accounts for individual noise). "
-        "This is the primary ranking metric."
-    )
+        fig.add_vline(x=true_lam, line_dash="dash", line_color="red",
+                      annotation_text=f"True λ={true_lam:.1f}", annotation_position="top right")
 
-    rng             = np.random.default_rng(42)
-    S               = len(mu_org_s)
-    lam_dev_post    = np.exp(alpha_m2[:, dev_id])
-    z_peer          = rng.normal(0, 1, S)
-    lam_peer        = np.exp(mu_org_s + delta_s[:, desig_idx] + z_peer * sigma_dev_s)
+        fig.update_layout(
+            height=220,
+            margin=dict(l=20, r=80, t=20, b=20),
+            xaxis_title="PRs / month",
+            yaxis_title="",
+            showlegend=False,
+            plot_bgcolor='white',
+            xaxis=dict(gridcolor='#eee'),
+        )
+        st.plotly_chart(fig, use_container_width=True)
 
-    # Primary metric: P(dev > random peer) — honest peer comparison
-    prob_beats_peer = (lam_dev_post > lam_peer).mean() * 100
+    with col_right:
+        st.subheader("Standing")
 
-    # Secondary: dev posterior median vs designation mean
-    lam_desig_pop   = np.exp(mu_org_s + delta_s[:, desig_idx])
-    prob_above_mean = (lam_dev_post > lam_desig_pop).mean() * 100
+        rng             = np.random.default_rng(42)
+        S               = len(mu_org_s)
+        lam_dev_post    = np.exp(alpha_m2[:, dev_id])
+        z_peer          = rng.normal(0, 1, S)
+        lam_peer        = np.exp(mu_org_s + delta_s[:, desig_idx] + z_peer * sigma_dev_s)
+        lam_desig_pop   = np.exp(mu_org_s + delta_s[:, desig_idx])
 
-    # Outlier status based on prob_beats_peer
-    if prob_beats_peer < 10:
-        outlier_status = "Bottom 10%"
-    elif prob_beats_peer < 25:
-        outlier_status = "Bottom 25%"
-    elif prob_beats_peer > 90:
-        outlier_status = "Top 10%"
-    elif prob_beats_peer > 75:
-        outlier_status = "Top 25%"
-    else:
-        outlier_status = "Within normal range"
+        prob_beats_peer = (lam_dev_post > lam_peer).mean() * 100
+        prob_above_mean = (lam_dev_post > lam_desig_pop).mean() * 100
 
-    col1, col2, col3 = st.columns(3)
-    col1.metric(
-        f"P(beats random {desig} peer)",
-        f"{prob_beats_peer:.1f}%",
-        f"≈ {prob_beats_peer:.0f}th percentile"
-    )
-    col2.metric(
-        f"P(above {desig} mean)",
-        f"{prob_above_mean:.1f}%"
-    )
-    col3.metric("Outlier status", outlier_status)
+        if prob_beats_peer < 10:
+            outlier_status = "⚠️ Bottom 10%"
+        elif prob_beats_peer < 25:
+            outlier_status = "📉 Bottom 25%"
+        elif prob_beats_peer > 90:
+            outlier_status = "🏆 Top 10%"
+        elif prob_beats_peer > 75:
+            outlier_status = "📈 Top 25%"
+        else:
+            outlier_status = "✅ Normal range"
+
+        st.metric(f"P(beats random {desig})", f"{prob_beats_peer:.0f}%",
+                  f"≈ {prob_beats_peer:.0f}th percentile")
+        st.metric(f"P(above {desig} mean)", f"{prob_above_mean:.0f}%")
+        st.metric("Outlier status", outlier_status)
+
+    st.markdown("---")
 
     # ── Monthly trend ─────────────────────────────────────────────────────────
-    st.subheader("Monthly PR trend")
+    st.subheader("Monthly Trend")
 
     dev_monthly = (df[df['developer_id'] == dev_id]
                    [['month', 'pr_count']].sort_values('month'))
 
-    fig, ax = plt.subplots(figsize=(9, 3))
-    ax.bar(dev_monthly['month'], dev_monthly['pr_count'],
-           color='steelblue', alpha=0.7, label='Observed count')
-    ax.axhline(emp[dev_id],       color='grey',       lw=1.5,
-               linestyle='--', label=f'Empirical mean = {emp[dev_id]:.1f}')
-    ax.axhline(lam_s_med[dev_id], color='steelblue',  lw=1.5,
-               linestyle='--', label=f'm_simple median = {lam_s_med[dev_id]:.1f}')
-    ax.axhline(lam_m2_med[dev_id],color='darkorange',  lw=1.5,
-               linestyle='--', label=f'm2 median = {lam_m2_med[dev_id]:.1f}')
-    ax.axhline(true_lam,          color='red',         lw=1.5,
-               linestyle=':',  label=f'True λ = {true_lam:.1f}')
-    ax.set_xticks(dev_monthly['month'])
-    ax.set_xlabel("Month")
-    ax.set_ylabel("PR count")
-    ax.set_title(f"Dev {dev_id} monthly PR counts")
-    ax.legend(fontsize=8, loc='upper right')
-    plt.tight_layout()
-    st.pyplot(fig)
-    plt.close()
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        x=dev_monthly['month'],
+        y=dev_monthly['pr_count'],
+        name='Observed',
+        marker_color='#636EFA',
+        opacity=0.7,
+    ))
+
+    for val, name, color, dash in [
+        (emp[dev_id],        'Empirical',  '#aaa',     'dash'),
+        (lam_s_med[dev_id],  'm_simple',   '#636EFA',  'dot'),
+        (lam_m2_med[dev_id], 'm2',         '#00CC96',  'dashdot'),
+        (true_lam,           'True λ',     'red',      'dash'),
+    ]:
+        fig.add_hline(y=val, line_dash=dash, line_color=color,
+                      annotation_text=f"{name}={val:.1f}",
+                      annotation_position="right")
+
+    fig.update_layout(
+        height=280,
+        margin=dict(l=20, r=120, t=20, b=20),
+        xaxis_title="Month",
+        yaxis_title="PR count",
+        xaxis=dict(tickmode='linear', dtick=1),
+        plot_bgcolor='white',
+        xaxis_gridcolor='#eee',
+        yaxis_gridcolor='#eee',
+        showlegend=False,
+    )
+
+    col_chart, _ = st.columns([3, 1])
+    with col_chart:
+        st.plotly_chart(fig, use_container_width=True)
