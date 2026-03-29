@@ -32,8 +32,9 @@ git clone "https://huggingface.co/spaces/${HF_USER}/${SPACE_NAME}" "${TMP_DIR}"
 echo "2. Copying app files..."
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 
-cp "${SCRIPT_DIR}/app.py"          "${TMP_DIR}/app.py"
+cp "${SCRIPT_DIR}/app.py"           "${TMP_DIR}/app.py"
 cp "${SCRIPT_DIR}/requirements.txt" "${TMP_DIR}/requirements.txt"
+cp "${SCRIPT_DIR}/Dockerfile"       "${TMP_DIR}/Dockerfile"
 cp "${SCRIPT_DIR}/HF_README.md"     "${TMP_DIR}/README.md"   # HF uses README.md for metadata
 
 cp -r "${SCRIPT_DIR}/llm_judge"    "${TMP_DIR}/llm_judge"

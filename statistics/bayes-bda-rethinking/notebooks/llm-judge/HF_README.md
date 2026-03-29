@@ -3,9 +3,7 @@ title: LLM Judge Bayesian Inference
 emoji: ⚖️
 colorFrom: blue
 colorTo: indigo
-sdk: streamlit
-sdk_version: 1.40.0
-app_file: app.py
+sdk: docker
 pinned: false
 license: mit
 short_description: Infer the true pass rate of an LLM-as-a-Judge using Bayesian inference
