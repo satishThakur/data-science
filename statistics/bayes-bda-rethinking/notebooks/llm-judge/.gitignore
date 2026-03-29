@@ -1,0 +1,4 @@
+# Allow pre-computed .nc files for HF Spaces deployment
+!data/
+!data/llm_judge/
+!data/llm_judge/*.nc
