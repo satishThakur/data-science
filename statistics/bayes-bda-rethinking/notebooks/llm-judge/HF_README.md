@@ -6,7 +6,7 @@ colorTo: indigo
 sdk: docker
 pinned: false
 license: mit
-short_description: Infer the true pass rate of an LLM-as-a-Judge using Bayesian inference
+short_description: Bayesian inference for LLM-as-a-Judge pass rate
 ---
 
 # Bayesian Inference of LLM-as-a-Judge True Pass Rate
@@ -36,6 +36,11 @@ underlying pass rate, along with honest uncertainty quantification.
 - 89% credible intervals with plain-English interpretation
 - Prior predictive and posterior predictive checks
 - KDE-based posterior overlays for clean visual comparison
+
+## Full Documentation
+
+Full mathematical derivation, model details, and teaching notes:
+[github.com/satishThakur/data-science — notebooks/llm-judge/README.md](https://github.com/satishThakur/data-science/blob/main/statistics/bayes-bda-rethinking/notebooks/llm-judge/README.md)
 
 ## Local Development
 

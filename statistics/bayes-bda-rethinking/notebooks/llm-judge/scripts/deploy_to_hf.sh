@@ -41,13 +41,15 @@ cp -r "${SCRIPT_DIR}/llm_judge"    "${TMP_DIR}/llm_judge"
 cp -r "${SCRIPT_DIR}/pages"        "${TMP_DIR}/pages"
 cp -r "${SCRIPT_DIR}/data"         "${TMP_DIR}/data"         # includes .nc files
 
-# ── Git LFS for .nc files (HF recommends LFS for files > 10MB, ours are ~1MB each) ──
-# Optional — uncomment if HF complains about file sizes
-# cd "${TMP_DIR}" && git lfs install && git lfs track "*.nc"
+# ── Git LFS for .nc binary files (required by HF Spaces) ─────────────────────
+echo "3. Configuring Git LFS for binary files..."
+cd "${TMP_DIR}"
+git lfs install
+git lfs track "*.nc"
+git add .gitattributes
 
 # ── Commit and push ────────────────────────────────────────────────────────────
-echo "3. Committing and pushing..."
-cd "${TMP_DIR}"
+echo "4. Committing and pushing..."
 git add .
 git commit -m "Deploy llm-judge Bayesian inference app"
 git push
